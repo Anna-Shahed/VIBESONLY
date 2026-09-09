@@ -5,7 +5,6 @@ function sqDist(a: RGB, b: RGB): number {
   return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
 }
 
-/** Deterministic k-means over RGB samples. */
 export function kmeans(
   samples: RGB[],
   k = 5,
@@ -91,7 +90,6 @@ export function analyzePixels(pixels: RGB[], opts: AnalyzeOptions = {}): ColorAn
   };
 }
 
-/** Downsample an image source and analyze it. Canvas is forced to sRGB for consistency. */
 export async function analyzeImage(
   image: HTMLImageElement | HTMLCanvasElement | VideoFrame,
   maxDim = 96
