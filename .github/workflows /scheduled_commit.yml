@@ -1,0 +1,55 @@
+name: Scheduled Contribution Workflow
+
+on:
+  schedule:
+    # Runs exactly at the start of every hour (24 times a day)
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  make-contribution:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Ensures full history is available for clean pushing
+
+    - name: Run Structured Commits Loop
+      run: |
+        # 1. Determine the current UTC hour (0 to 23)
+        CURRENT_HOUR=$(date -u +%-H)
+        
+        # 2. Assign commit distribution to hit exactly 74:
+        # Hours 0-21 (22 hours) get 3 commits each = 66 commits
+        # Hours 22-23 (2 hours) get 4 commits each  = 8 commits
+        # Total = 66 + 8 = 74 commits daily
+        if [ "$CURRENT_HOUR" -ge 22 ]; then
+          COMMIT_COUNT=4
+        else
+          COMMIT_COUNT=3
+        fi
+        
+        # 3. Configure Git inside the runner
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        
+        # 4. Loop to create distinct, sequential commits
+        for i in $(seq 1 $COMMIT_COUNT); do
+          echo "Activity log entry: $(date -u) (Commit $i/$COMMIT_COUNT for hour $CURRENT_HOUR)" >> contribution_log.txt
+          
+          git add contribution_log.txt
+          # Using [skip ci] prevents the automated commit from triggering an accidental workflow loop
+          git commit -m "automated: structured repository update [skip ci]"
+          
+          # Short pause to ensure unique timestamps
+          sleep 1
+        done
+
+    - name: Push Changes
+      run: |
+        # Push all batched commits safely back to the repository
+        git push origin HEAD:${{ github.ref_name }}
