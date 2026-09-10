@@ -1,1 +1,1 @@
-export type
+export type { ThemeTokens } from "@/lib/color/theme";
