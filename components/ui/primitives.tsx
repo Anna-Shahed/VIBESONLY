@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 
-/** Horizontal shelf with native touch scroll + desktop drag + click suppression. */
 export function useDragScroll<T extends HTMLElement>() {
   const ref = useRef<T>(null);
   const state = useRef({ down: false, startX: 0, startScroll: 0, moved: false });
