@@ -4,8 +4,8 @@ export class PreviewEngine {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
   private timer: number | null = null;
-  private active: OscillatorNode[] = [];
-
+  private active: OscillatorNode[] = []; 
+  
   start(seed: number) {
     this.stop();
     if (typeof window === "undefined") return;
