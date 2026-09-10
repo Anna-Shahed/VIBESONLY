@@ -5,3 +5,7 @@ export const brightnessLabel = (b: number): BrightnessLabel => (b < 0.3 ? "dark"
 export const saturationLabel = (s: number): SaturationLabel => (s < 0.2 ? "muted" : s < 0.5 ? "medium" : "vivid");
 export const contrastLabel = (c: number): ContrastLabel => (c < 0.3 ? "soft" : c < 0.6 ? "medium" : "high");
 export const temperatureLabel = (t: number): TemperatureLabel => (t > 0.25 ? "warm" : t < -0.25 ? "cool" : "neutral");
+
+type Cond = Partial<Record<BrightnessLabel | SaturationLabel | ContrastLabel | TemperatureLabel, true>>;
+const MOOD_RULES: Array<[Cond, string]> = [
+  [{ dark: true, high: true, warm: true }, "cinematic"],
