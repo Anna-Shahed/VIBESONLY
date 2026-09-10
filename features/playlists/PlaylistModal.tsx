@@ -10,3 +10,18 @@ export function PlaylistModalHost() {
 
 if (!playlistModalTrackIds) return null;
   const ids = playlistModalTrackIds;
+
+  const create = () => {
+    if (!name.trim()) return;
+    createPlaylist(name.trim(), ids);
+    setName("");
+    closePlaylistModal();
+  };
+
+return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+        onClick={closePlaylistModal}
+      >
