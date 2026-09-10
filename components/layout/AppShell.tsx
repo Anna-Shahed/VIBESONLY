@@ -1,1 +1,69 @@
+"use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+
+const LINKS = [
+  { href: "/app/discover", label: "Discover" },
+  { href: "/app/music", label: "My Music" },
+  { href: "/app/vibes", label: "Vibes" },
+  { href: "/app/saved", label: "Saved" }
+];
+
+export default function AppShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  return (
+    <div className="min-h-screen bg-vibe-bg text-vibe-text">
+      <header className="sticky top-0 z-30 bg-vibe-bg/85 backdrop-blur border-b border-vibe-line">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center gap-6">
+          <Link href="/app/discover" className="font-display text-xl tracking-tight font-bold whitespace-nowrap">
+            VIBESONLY<span className="text-vibe-accent">.</span>
+          </Link>
+          <nav aria-label="Primary" className="hidden md:flex items-center gap-1 ml-6">
+            {LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`px-3 py-2 text-xs uppercase tracking-[0.18em] transition-colors ${pathname === l.href ? "text-vibe-accent" : "text-vibe-muted hover:text-vibe-text"}`}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="ml-auto flex items-center gap-3">
+            <Link href="/scan" className="vo-btn-primary !px-5 !py-2.5">SCAN</Link>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 pb-32 md:pb-24 pt-6">{children}</main>
+
+      {}
+      <nav aria-label="Mobile" className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-vibe-surface/95 backdrop-blur border-t border-vibe-line pb-safe">
+        <div className="grid grid-cols-4 h-16">
+          {LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={`flex flex-col items-center justify-center gap-1 text-[10px] uppercase tracking-widest ${pathname === l.href ? "text-vibe-accent" : "text-vibe-muted"}`}
+            >
+              <span className="text-base leading-none">{icon(l.href)}</span>
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      </nav>
+    </div>
+  );
+}
+
+function icon(href: string) {
+  switch (href) {
+    case "/app/discover": return "◈";
+    case "/app/music": return "♪";
+    case "/app/vibes": return "✧";
+    case "/app/saved": return "♥";
+    default: return "•";
+  }
+}
