@@ -10,7 +10,7 @@ interface PlayerContextValue {
   index: number;
   current: Track | null;
   playing: boolean;
-  progress: number;     // seconds
+  progress: number;     
   duration: number;
   playQueue(tracks: Track[], startIndex?: number): void;
   playTrack(track: Track, queue?: Track[]): void;
