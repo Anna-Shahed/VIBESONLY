@@ -2,7 +2,6 @@ import type { MusicProvider, Track } from "@/types";
 import { DEMO_TRACKS } from "./data";
 import { artworkFor, seedFromId } from "./artwork";
 
-/** Local demo provider. External streaming providers can implement the same interface later. */
 export class DemoProvider implements MusicProvider {
   id = "demo";
   name = "VIBESONLY Library";
@@ -59,7 +58,6 @@ export async function parsePlaylistFile(file: File): Promise<Array<{ title: stri
   throw new Error("Only .json or .csv playlists are supported");
 }
 
-/** Convert uploaded metadata into a Track with a deterministic generated artwork. */
 export function trackFromUpload(meta: { title: string; artist?: string; album?: string; genre?: string }, index: number): Track {
   const id = `up-${Date.now()}-${index}`;
   const hue = seedFromId(meta.title.toLowerCase()) % 360;
