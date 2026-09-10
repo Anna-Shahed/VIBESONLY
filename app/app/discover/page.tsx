@@ -39,7 +39,7 @@ export default function DiscoverPage() {
 
   return (
     <div className="space-y-16">
-      {/* CURRENT VIBE */}
+      {}
       <section>
         <SectionHeading
           kicker={activeVibe ? "your current vibe" : "tonight's vibe"}
@@ -58,7 +58,7 @@ export default function DiscoverPage() {
         </Shelf>
       </section>
 
-      {/* FOR YOU */}
+      {}
       <section>
         <SectionHeading kicker="personal" title="For you" />
         <Shelf>
@@ -66,7 +66,7 @@ export default function DiscoverPage() {
         </Shelf>
       </section>
 
-      {/* BECAUSE YOU LIKE */}
+      {}
       {anchors.map((anchor) => {
         const similar = rankTracks({ ...userTasteProfile(signals, [anchor]) ?? anchorProfile(anchor), primaryColor: anchor.dominantArtworkColor, secondaryColors: anchor.artworkPalette.slice(1, 3), palette: anchor.artworkPalette, visualMood: anchor.mood[0] ?? "balanced" }, tracks.filter((t) => t.id !== anchor.id), signals, 12);
         return (
