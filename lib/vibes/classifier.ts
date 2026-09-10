@@ -2,3 +2,4 @@ import type { ColorAnalysis, VibeProfile, BrightnessLabel, SaturationLabel, Cont
 import { hexToRgb, rgbToHex, rgbToHsl } from "@/lib/color/utils";
 
 export const brightnessLabel = (b: number): BrightnessLabel => (b < 0.3 ? "dark" : b < 0.55 ? "medium" : "light");
+export const saturationLabel = (s: number): SaturationLabel => (s < 0.2 ? "muted" : s < 0.5 ? "medium" : "vivid");
