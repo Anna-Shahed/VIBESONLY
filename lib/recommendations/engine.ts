@@ -122,7 +122,6 @@ export function userTasteProfile(signals: UserSignals, tracks: Track[]): VibePro
   };
 }
 
-/** Colour of the day: pick a hue on the golden angle so each day differs. */
 export function colorOfTheDay(date = new Date()): string {
   const start = new Date(date.getFullYear(), 0, 0);
   const day = Math.floor((date.getTime() - start.getTime()) / 86400000);
