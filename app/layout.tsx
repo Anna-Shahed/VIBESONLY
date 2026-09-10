@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Space_Grotesk } from "next/font/google";
+import { Fraunces } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/lib/store/AppContext";
 import { PlayerProvider } from "@/lib/player/PlayerContext";
@@ -8,17 +8,18 @@ import { PlaylistModalHost } from "@/features/playlists/PlaylistModal";
 import { PlayerSlot } from "@/features/player/MiniPlayer";
 
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces" });
-const space = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
 
 export const metadata: Metadata = {
   title: "VIBESONLY — Your space has a soundtrack.",
-  description: "Scan the vibe around you. Find the music that belongs in it."
+  description: "Scan the vibe around you. Find the music that belongs in it.",
+  themeColor: "#050506"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${space.variable}`}>
+    <html lang="en" className={fraunces.variable}>
       <body>
+        <div className="ambient" aria-hidden />
         <AppProvider>
           <PlayerProvider>
             {children}
@@ -27,8 +28,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <PlayerSlot />
           </PlayerProvider>
         </AppProvider>
+        <div className="grain" aria-hidden />
       </body>
     </html>
   );
 }
-
