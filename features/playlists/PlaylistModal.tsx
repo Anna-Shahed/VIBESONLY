@@ -40,3 +40,26 @@ return (
               return (
                 <button
                   key={p.id}
+                  onClick={() => {
+                    if (has) ids.forEach((id) => removeFromPlaylist(p.id, id));
+                    else addToPlaylist(p.id, ids);
+                  }}
+                  className="w-full flex items-center justify-between bg-vibe-surface2 border border-vibe-line rounded-lg px-4 py-3 hover:border-vibe-accent transition-colors"
+                >
+                  <span className="text-sm text-vibe-text">{p.name}</span>
+                  <span className="text-xs text-vibe-muted">{has ? "Remove" : `${p.trackIds.length} tracks`}</span>
+                </button>
+              );
+            })}
+            {playlists.length === 0 && <p className="text-xs text-vibe-muted text-center py-3">No playlists yet.</p>}
+          </div>
+
+          <div className="mt-5 flex gap-2">
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && create()}
+              placeholder="New playlist name…"
+              aria-label="New playlist name"
+              className="flex-1 bg-vibe-surface2 border border-vibe-line rounded-lg px-3 py-2.5 text-sm text-vibe-text placeholder:text-vibe-muted focus:outline-none focus:border-vibe-accent"
+            />
