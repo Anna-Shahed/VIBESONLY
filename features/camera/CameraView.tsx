@@ -92,7 +92,7 @@ export function CameraView({ onCaptured, onCancel, onPermissionError }: Props) {
         className={`h-full w-full object-cover ${facing === "user" ? "-scale-x-100" : ""}`}
       />
 
-      {/* framing guides */}
+      {}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-6 top-6 bottom-6 border border-white/25 rounded-lg">
           <span className="absolute -top-px -left-px h-6 w-6 border-t-2 border-l-2 border-vibe-accent" />
@@ -109,7 +109,7 @@ export function CameraView({ onCaptured, onCancel, onPermissionError }: Props) {
         </div>
       )}
 
-      {/* overlay copy */}
+      {}
       <p className="absolute top-3 inset-x-0 text-center text-xs uppercase tracking-[0.3em] text-white/80 pointer-events-none">
         point it at something that feels like you
       </p>
