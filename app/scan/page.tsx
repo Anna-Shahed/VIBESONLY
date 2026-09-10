@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,10 +10,17 @@ import { ScanResult } from "@/features/camera/ScanResult";
 import { SCENE_PRESETS, analysisFromPreset } from "@/lib/vibes/presets";
 
 type Stage = "consent" | "camera" | "analyzing" | "result" | "presets";
-
 const STATUS = ["SCANNING", "ANALYZING", "MATCHING"];
 
 export default function ScanPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen grid place-items-center text-vibe-muted">Loading…</div>}>
+      <ScanInner />
+    </Suspense>
+  );
+}
+
+function ScanInner() {
   const { runAnalysis, runPreset, restoreScan, scans } = useApp();
   const params = useSearchParams();
   const vibeId = params.get("vibe");
@@ -22,7 +29,6 @@ export default function ScanPage() {
   const [statusIdx, setStatusIdx] = useState(0);
   const analyzingRef = useRef(false);
 
-  // deep-link to a saved vibe result
   useEffect(() => {
     if (vibeId) {
       const scan = scans.find((s) => s.id === vibeId);
@@ -36,8 +42,6 @@ export default function ScanPage() {
     setStage("analyzing");
     setStatusIdx(0);
     const statusTimer = setInterval(() => setStatusIdx((i) => Math.min(i + 1, STATUS.length - 1)), 650);
-
-    // small delay so the UI breathes; analysis itself is fast + non-blocking
     setTimeout(async () => {
       try {
         const { analyzeImage } = await import("@/lib/color/analysis");
@@ -69,11 +73,11 @@ export default function ScanPage() {
   const presets = useMemo(() => SCENE_PRESETS, []);
 
   return (
-    <main className="min-h-screen bg-vibe-bg text-vibe-text">
+    <main className="min-h-screen relative z-10">
       <div className="mx-auto max-w-4xl px-4 py-8 sm:py-12 min-h-screen flex flex-col">
         <div className="flex items-center justify-between mb-6">
           <Link href="/app/discover" className="font-display text-xl font-bold">VIBESONLY<span className="text-vibe-accent">.</span></Link>
-          <Link href="/app/discover" className="text-xs uppercase tracking-[0.2em] text-vibe-muted hover:text-vibe-text">Exit</Link>
+          <Link href="/app/discover" className="text-[11px] uppercase tracking-[0.2em] text-vibe-muted hover:text-vibe-text">Exit</Link>
         </div>
 
         <AnimatePresence mode="wait">
@@ -93,7 +97,7 @@ export default function ScanPage() {
 
           {stage === "camera" && (
             <motion.div key="camera" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col items-center gap-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-vibe-muted">capture the vibe</p>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-vibe-muted">capture the vibe</p>
               <CameraView
                 onCaptured={handleCaptured}
                 onCancel={() => setStage("presets")}
@@ -104,20 +108,15 @@ export default function ScanPage() {
 
           {stage === "presets" && (
             <motion.div key="presets" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 py-10">
-              <p className="text-center text-xs uppercase tracking-[0.3em] text-vibe-muted mb-2">No camera? No problem.</p>
+              <p className="text-center text-[11px] uppercase tracking-[0.3em] text-vibe-muted mb-2">No camera? No problem.</p>
               <h2 className="text-center font-display text-3xl mb-8">Try a sample vibe</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {presets.map((p) => (
-                  <button
-                    key={p.id}
-                    onClick={() => handlePreset(p.id)}
-                    className="group text-left vo-card rounded-xl overflow-hidden hover:border-vibe-accent transition-colors"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <button key={p.id} onClick={() => handlePreset(p.id)} className="group text-left vo-card rounded-xl overflow-hidden hover:!border-vibe-accent">
                     <img src={p.scene} alt={`${p.name} sample scene`} loading="lazy" className="aspect-[4/5] w-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
                     <div className="p-3">
                       <p className="text-sm font-semibold">{p.name}</p>
-                      <p className="text-[11px] text-vibe-muted">{p.tagline}</p>
+                      <p className="text-[10px] text-vibe-muted uppercase tracking-widest">{p.tagline}</p>
                     </div>
                   </button>
                 ))}
@@ -128,12 +127,12 @@ export default function ScanPage() {
           {stage === "analyzing" && (
             <motion.div key="analyzing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col items-center justify-center gap-6 py-24">
               <div className="relative h-24 w-24">
-                <div className="absolute inset-0 rounded-full border-2 border-vibe-line" />
+                <div className="absolute inset-0 rounded-full border-2 border-white/10" />
                 <div className="absolute inset-0 rounded-full border-2 border-vibe-accent border-t-transparent animate-spin" />
               </div>
               <div className="text-center">
                 <p className="font-display text-3xl tracking-[0.2em]">{STATUS[statusIdx]}</p>
-                <p className="text-xs text-vibe-muted mt-2 uppercase tracking-[0.25em]">reading the colours around you</p>
+                <p className="text-[11px] text-vibe-muted mt-2 uppercase tracking-[0.25em]">reading the colours around you</p>
               </div>
             </motion.div>
           )}
