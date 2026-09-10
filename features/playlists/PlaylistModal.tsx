@@ -63,3 +63,10 @@ return (
               aria-label="New playlist name"
               className="flex-1 bg-vibe-surface2 border border-vibe-line rounded-lg px-3 py-2.5 text-sm text-vibe-text placeholder:text-vibe-muted focus:outline-none focus:border-vibe-accent"
             />
+            <button className="vo-btn-primary !py-2.5" onClick={create} disabled={!name.trim()}>Create</button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
