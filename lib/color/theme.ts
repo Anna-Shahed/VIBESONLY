@@ -16,9 +16,3 @@ export function buildTheme(primaryHex: string, secondaryHex: string): ThemeToken
   const s = hexToRgb(secondaryHex);
   const [ph, ps, pl] = rgbToHsl(p);
   const [sh, ss] = rgbToHsl(s);
-
-  let accentL = pl;
-  if (pl < 0.35) accentL = Math.min(0.62, pl + 0.32);
-  if (pl > 0.72) accentL = 0.68;
-  const accent = hslCss(ph, Math.max(0.45, ps), accentL);
-  const accent2 = hslCss(sh, Math.max(0.4, ss), 0.72);
