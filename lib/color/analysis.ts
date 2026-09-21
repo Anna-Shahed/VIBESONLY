@@ -31,11 +31,4 @@ export function kmeans(
       }
       assign[i] = best;
     }
-    const sums = centers.map(() => [0, 0, 0] as [number, number, number]);
-    counts.fill(0);
-    for (let i = 0; i < samples.length; i++) {
-      const c = assign[i];
-      counts[c]++;
-      sums[c][0] += samples[i][0]; sums[c][1] += samples[i][1]; sums[c][2] += samples[i][2];
-    }
    
