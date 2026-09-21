@@ -80,16 +80,7 @@ export function analyzePixels(pixels: RGB[], opts: AnalyzeOptions = {}): ColorAn
   const hue = sw > 0 ? (Math.atan2(sy, sx) * 180) / Math.PI : 0;
   const hueNorm = ((hue % 360) + 360) % 360;
   return {
-    primary: palette[0] ?? [0, 0, 0],
-    palette,
-    brightness,
-    saturation,
-    contrast,
-    temperature,
-    hue: hueNorm
-  };
-}
-
+   
 export async function analyzeImage(
   image: HTMLImageElement | HTMLCanvasElement | VideoFrame,
   maxDim = 96
