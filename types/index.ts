@@ -1,14 +1,5 @@
 export type RGB = [number, number, number];
 
-export interface ColorAnalysis {
-  primary: RGB;
-  palette: RGB[];
-  brightness: number;   // 0..1
-  saturation: number;   // 0..1
-  contrast: number;     // 0..1
-  temperature: number;  // -1 cool .. +1 warm
-  hue: number;          // 0..360
-}
 
 export type BrightnessLabel = "dark" | "medium" | "light";
 export type SaturationLabel = "muted" | "medium" | "vivid";
