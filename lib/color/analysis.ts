@@ -20,15 +20,3 @@ export function kmeans(
     if (!used.has(i)) { used.add(i); centers.push([...samples[i]]); }
     guard++;
   }
-  const counts = new Array(k).fill(0);
-  const assign = new Array(samples.length).fill(0);
-  for (let it = 0; it < iterations; it++) {
-    for (let i = 0; i < samples.length; i++) {
-      let best = 0, bd = Infinity;
-      for (let c = 0; c < centers.length; c++) {
-        const d = sqDist(samples[i], centers[c]);
-        if (d < bd) { bd = d; best = c; }
-      }
-      assign[i] = best;
-    }
-   
