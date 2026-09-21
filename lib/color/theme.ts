@@ -23,21 +23,6 @@ export function buildTheme(primaryHex: string, secondaryHex: string): ThemeToken
   const accent = hslCss(ph, Math.max(0.45, ps), accentL);
   const accent2 = hslCss(sh, Math.max(0.4, ss), 0.72);
 
-  return {
-    bg: hslCss(ph, ps * 0.3, 0.035),           
-    surface: hslCss(ph, ps * 0.25, 0.07),
-    surface2: hslCss(ph, ps * 0.22, 0.115),
-    accent,
-    accent2,
-    text: hslCss(ph, 0.16, 0.94),
-    muted: hslCss(ph, 0.1, 0.6),
-    border: "rgba(255, 255, 255, 0.1)",
-    highlight: accent2,
-    glass: `color-mix(in srgb, ${accent} 10%, transparent)`,
-    glow: `color-mix(in srgb, ${accent} 45%, transparent)`
-  };
-}
-
 export function applyTheme(tokens: ThemeTokens) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
