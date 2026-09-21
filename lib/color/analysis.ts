@@ -81,8 +81,3 @@ export function analyzePixels(pixels: RGB[], opts: AnalyzeOptions = {}): ColorAn
   const hueNorm = ((hue % 360) + 360) % 360;
   return {
    
-export async function analyzeImage(
-  image: HTMLImageElement | HTMLCanvasElement | VideoFrame,
-  maxDim = 96
-): Promise<ColorAnalysis> {
- 
