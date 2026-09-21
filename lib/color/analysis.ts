@@ -94,16 +94,4 @@ export async function analyzeImage(
   image: HTMLImageElement | HTMLCanvasElement | VideoFrame,
   maxDim = 96
 ): Promise<ColorAnalysis> {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d", { willReadFrequently: true, colorSpace: "srgb" });
-  if (!ctx) throw new Error("Canvas 2D not supported");
-  const w = (image as HTMLImageElement).width, h = (image as HTMLImageElement).height;
-  const scale = Math.min(1, maxDim / Math.max(1, Math.max(w, h)));
-  canvas.width = Math.max(1, Math.round(w * scale));
-  canvas.height = Math.max(1, Math.round(h * scale));
-  ctx.drawImage(image as CanvasImageSource, 0, 0, canvas.width, canvas.height);
-  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  const pixels: RGB[] = [];
-  for (let i = 0; i < data.length; i += 4) pixels.push([data[i], data[i + 1], data[i + 2]]);
-  return analyzePixels(pixels);
-}
+ 
