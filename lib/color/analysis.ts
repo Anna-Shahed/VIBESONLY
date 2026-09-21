@@ -38,11 +38,4 @@ export function kmeans(
       counts[c]++;
       sums[c][0] += samples[i][0]; sums[c][1] += samples[i][1]; sums[c][2] += samples[i][2];
     }
-    for (let c = 0; c < centers.length; c++) {
-      if (counts[c] > 0) centers[c] = [sums[c][0] / counts[c], sums[c][1] / counts[c], sums[c][2] / counts[c]];
-    }
-  }
-  return { centers, counts };
-}
-
-  }
+   
