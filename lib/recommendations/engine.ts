@@ -121,11 +121,3 @@ export function userTasteProfile(signals: UserSignals, tracks: Track[]): VibePro
     confidence: 0.7
   };
 }
-
-export function colorOfTheDay(date = new Date()): string {
-  const start = new Date(date.getFullYear(), 0, 0);
-  const day = Math.floor((date.getTime() - start.getTime()) / 86400000);
-  const hue = (day * 137.508) % 360;
-  return rgbToHex(hslToRgb(hue, 0.6, 0.45));
-}
-
