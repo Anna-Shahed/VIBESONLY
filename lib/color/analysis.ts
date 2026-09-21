@@ -57,8 +57,3 @@ export function analyzePixels(pixels: RGB[], opts: AnalyzeOptions = {}): ColorAn
     samples = [];
     for (let i = 0; i < pixels.length; i += step) samples.push(pixels[i]);
   }
-  const { centers, counts } = kmeans(samples, 5, 8, rng);
-  const order = centers.map((_, i) => i).sort((a, b) => counts[b] - counts[a]);
-  const palette = order.map((i) => centers[i].map(Math.round) as RGB);
-
-  const contrast = clamp01(Math.sqrt(Math.max(0, lumSq / Math.max(1, n) - meanLum * meanLum)) * 2.8);
