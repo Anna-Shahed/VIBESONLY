@@ -58,27 +58,7 @@ export interface LocalPlaylist {
   createdAt: number;
 }
 
-export interface VibeScan {
-  id: string;
-  createdAt: number;
-  palette: string[];
-  primaryColor: string;
-  temperature: TemperatureLabel;
-  brightness: BrightnessLabel;
-  saturation: SaturationLabel;
-  contrast: ContrastLabel;
-  mood: string;
-  vibeName: string;
-  confidence: number;
-  recommendationIds: string[];
-  source: "camera" | "sample";
-}
 
-export interface ActiveVibe {
-  profile: VibeProfile;
-  recommendations: Recommendation[];
-  source: "camera" | "sample";
-  scanId?: string;
 }
 
   addTracksToPlaylist(playlistId: string, trackIds: string[]): Promise<void>;
