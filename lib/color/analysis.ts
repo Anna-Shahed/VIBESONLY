@@ -45,15 +45,4 @@ export function kmeans(
   return { centers, counts };
 }
 
-export interface AnalyzeOptions { rng?: () => number; maxSamples?: number }
-
-/** Core analysis over raw RGB samples — the unit-testable heart of the pipeline. */
-export function analyzePixels(pixels: RGB[], opts: AnalyzeOptions = {}): ColorAnalysis {
-  const rng = opts.rng ?? mulberry32(42);
-  const maxSamples = opts.maxSamples ?? 4000;
-  let samples = pixels;
-  if (pixels.length > maxSamples) {
-    const step = Math.floor(pixels.length / maxSamples);
-    samples = [];
-    for (let i = 0; i < pixels.length; i += step) samples.push(pixels[i]);
   }
