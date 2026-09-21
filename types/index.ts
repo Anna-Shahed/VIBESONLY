@@ -6,19 +6,6 @@ export type SaturationLabel = "muted" | "medium" | "vivid";
 export type ContrastLabel = "soft" | "medium" | "high";
 export type TemperatureLabel = "warm" | "cool" | "neutral";
 
-export interface VibeProfile {
-  primaryColor: string;
-  secondaryColors: string[];
-  palette: string[];
-  brightness: BrightnessLabel;
-  saturation: SaturationLabel;
-  contrast: ContrastLabel;
-  temperature: TemperatureLabel;
-  visualMood: string;
-  vibeName: string;
-  confidence: number;
-  raw?: ColorAnalysis;
-}
 
 export interface Track {
   id: string;
