@@ -81,12 +81,5 @@ export interface ActiveVibe {
   scanId?: string;
 }
 
-export interface MusicProvider {
-  id: string;
-  name: string;
-  getTracks(): Promise<Track[]>;
-  searchTracks(query: string): Promise<Track[]>;
-  getArtwork(trackId: string): Promise<string | null>;
-  createPlaylist(name: string): Promise<{ id: string; name: string }>;
   addTracksToPlaylist(playlistId: string, trackIds: string[]): Promise<void>;
 }
