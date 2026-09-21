@@ -61,17 +61,4 @@ export function analyzePixels(pixels: RGB[], opts: AnalyzeOptions = {}): ColorAn
   const order = centers.map((_, i) => i).sort((a, b) => counts[b] - counts[a]);
   const palette = order.map((i) => centers[i].map(Math.round) as RGB);
 
-  let lumSum = 0, lumSq = 0, satSum = 0, warm = 0, cool = 0, n = 0;
-  let sx = 0, sy = 0, sw = 0;
-  for (const p of samples) {
-    const [h, s, l] = rgbToHsl(p);
-    const lum = relativeLuminance(p);
-    lumSum += lum; lumSq += lum * lum; n++;
-    satSum += s;
-    warm += s * (0.5 + 0.5 * Math.cos(((h - 30) * Math.PI) / 180));
-    cool += s * (0.5 + 0.5 * Math.cos(((h - 210) * Math.PI) / 180));
-    if (s > 0.15) { sx += Math.cos((h * Math.PI) / 180) * s; sy += Math.sin((h * Math.PI) / 180) * s; sw += s; }
-  }
-  const meanLum = n ? lumSum / n : 0;
-  const brightness = clamp01(meanLum);
   const contrast = clamp01(Math.sqrt(Math.max(0, lumSq / Math.max(1, n) - meanLum * meanLum)) * 2.8);
