@@ -31,3 +31,11 @@ export interface RecommendationResult {
   matchScore: number;
   explanation: string;
 }
+  
+export interface VibeScanRecord {
+  id: string;
+  createdAt: string;
+  vibe: VibeProfile;
+  imageSnapshotUrl?: string;
+  recommendations: RecommendationResult[];
+}
