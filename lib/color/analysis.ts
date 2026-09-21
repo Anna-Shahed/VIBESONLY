@@ -75,9 +75,3 @@ export function analyzePixels(pixels: RGB[], opts: AnalyzeOptions = {}): ColorAn
   const meanLum = n ? lumSum / n : 0;
   const brightness = clamp01(meanLum);
   const contrast = clamp01(Math.sqrt(Math.max(0, lumSq / Math.max(1, n) - meanLum * meanLum)) * 2.8);
-  const saturation = clamp01(n ? satSum / n : 0);
-  const temperature = warm + cool > 1e-6 ? (warm - cool) / (warm + cool) : 0;
-  const hue = sw > 0 ? (Math.atan2(sy, sx) * 180) / Math.PI : 0;
-  const hueNorm = ((hue % 360) + 360) % 360;
-  return {
-   
