@@ -1,10 +1,3 @@
-export type RGB = [number, number, number];
-
-
-export type BrightnessLabel = "dark" | "medium" | "light";
-export type SaturationLabel = "muted" | "medium" | "vivid";
-export type ContrastLabel = "soft" | "medium" | "high";
-export type TemperatureLabel = "warm" | "cool" | "neutral";
 
 
 export interface Track {
