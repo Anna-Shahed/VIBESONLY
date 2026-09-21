@@ -10,9 +10,3 @@ export interface ThemeTokens {
 export const THEME_VARS = [
   "bg", "surface", "surface2", "accent", "accent2", "text", "muted", "border", "highlight", "glass", "glow"
 ] as const;
-
-export function buildTheme(primaryHex: string, secondaryHex: string): ThemeTokens {
-  const p = hexToRgb(primaryHex);
-  const s = hexToRgb(secondaryHex);
-  const [ph, ps, pl] = rgbToHsl(p);
-  const [sh, ss] = rgbToHsl(s);
