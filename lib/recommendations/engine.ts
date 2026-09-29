@@ -1,21 +1,33 @@
-import { Track, VibeProfile, RecommendationResult } from "@/types";
+import type { Track, VibeProfile } from "@/types";
 
-export function calculateMatchScore(track: Track, vibe: VibeProfile): RecommendationResult {
+export function rankTracks(allTracks: Track[], profile: VibeProfile): Track[] {
+  // Score every track based on how well its tags match the VibeProfile
+  const scoredTracks = allTracks.map((track) => {
+    let score = 0;
+    const t = track as Track & { moods?: string[] };
 
-  let score = 75;
-  if (vibe.temperature === "Warm" && track.mood.includes("Warm")) score += 15;
-  if (vibe.visualMood.toLowerCase().includes("cinematic") && track.genre.includes("Cinematic")) score += 10;
-  score = Math.min(98, Math.max(62, score + Math.floor(Math.random() * 8)));
+    // Match visual mood (e.g., "neon", "midnight", "minimal", "cinematic")
+    if (t.moods && t.moods.includes(profile.visualMood)) {
+      score += 10;
+    }
 
-  return {
-    track,
-    matchScore: score,
-    explanation: `Shares the ${vibe.temperature.toLowerCase()} tone and ${vibe.visualMood.toLowerCase()} resonance of your captured environment.`
-  };
-}
+    // Match temperature alignment (warm vibes get a boost for warm audio tags, etc.)
+    if (profile.temperature === "warm" && (track.title.includes("Golden") || track.title.includes("Solar"))) {
+      score += 5;
+    } else if (profile.temperature === "cool" && (track.title.includes("Midnight") || track.title.includes("Submarine"))) {
+      score += 5;
+    }
 
-export function getRecommendations(tracks: Track[], vibe: VibeProfile): RecommendationResult[] {
-  return tracks
-    .map(track => calculateMatchScore(track, vibe))
-    .sort((a, b) => b.matchScore - a.matchScore);
+    // Add a slight pseudo-random variance based on track ID so results feel fresh on every scan
+    const randomHash = Math.abs(Math.sin(parseInt(track.id) * 999)) * 3;
+    score += randomHash;
+
+    return { track, score };
+  });
+
+  // Sort descending by highest score
+  scoredTracks.sort((a, b) => b.score - a.score);
+
+  // Return just the sorted tracks
+  return scoredTracks.map((item) => item.track);
 }
