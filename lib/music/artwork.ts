@@ -1,4 +1,4 @@
-function seedFromId(id: string): number {
+export function seedFromId(id: string): number {
   let h = 0;
   for (let i = 0; i < id.length; i++) {
     h = (Math.imul(31, h) + id.charCodeAt(i)) | 0;
